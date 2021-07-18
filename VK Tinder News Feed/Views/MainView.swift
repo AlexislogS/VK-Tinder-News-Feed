@@ -177,6 +177,7 @@ struct MainView: View {
         })
       }
     }
+    .padding(.vertical)
   }
   
   private func isTopCard(card: CardView) -> Bool {
