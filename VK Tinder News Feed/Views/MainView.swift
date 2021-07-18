@@ -63,6 +63,8 @@ struct MainView: View {
       ZStack {
         ForEach(cardViews) { cardView in
           cardView
+            .overlay((dragState.translation.width > dragAreaThreshold && isTopCard(card: cardView) || likeButtonPressed && isTopCard(card: cardView)) ? Color("red").opacity(0.2) : .clear)
+            .overlay((dragState.translation.width < -dragAreaThreshold && isTopCard(card: cardView) || disLikeButtonPressed && isTopCard(card: cardView)) ? Color("blue").opacity(0.2) : .clear)
             .zIndex(isTopCard(card: cardView) ? 1 : 0)
             .overlay(
               ZStack {
@@ -79,7 +81,7 @@ struct MainView: View {
                     
                   }
                   Spacer()
-                }.opacity(dragState.translation.width < -dragAreaThreshold && isTopCard(card: cardView) ? 1 : 0)
+                }.opacity((dragState.translation.width < -dragAreaThreshold && isTopCard(card: cardView) || disLikeButtonPressed && isTopCard(card: cardView)) ? 1 : 0)
                 VStack {
                   HStack {
                     Text("Больше таких   \nзаписей")
@@ -91,7 +93,7 @@ struct MainView: View {
                     Spacer()
                   }
                   Spacer()
-                }.opacity(dragState.translation.width > dragAreaThreshold && isTopCard(card: cardView) ? 1 : 0)
+                }.opacity((dragState.translation.width > dragAreaThreshold && isTopCard(card: cardView) || likeButtonPressed && isTopCard(card: cardView)) ? 1 : 0)
               }
             )
             .offset(x: isTopCard(card: cardView) ? dragState.translation.width : 0, y: isTopCard(card: cardView) ? dragState.translation.height: 0)
